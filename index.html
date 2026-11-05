@@ -47,6 +47,7 @@ header.top{display:flex;align-items:center;gap:20px;padding:20px 0}
 .product{display:flex;align-items:center;gap:10px;font-weight:900;font-size:24px;letter-spacing:-.01em}
 .product svg{width:30px;height:30px}
 .spacer{flex:1}
+.back{flex:none;white-space:nowrap}
 .updated{font-size:14px;color:rgba(255,255,255,.85);text-align:right}
 .glass{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .seg{display:inline-flex;padding:4px;border-radius:999px;gap:2px}
@@ -217,6 +218,7 @@ footer{padding:40px 0 60px;display:flex;flex-wrap:wrap;gap:12px;justify-content:
   .divider{display:none}
   .logo img{height:44px;min-width:122px}
   .spacer{display:none}
+  .back{order:3;margin-left:auto}
   .updated{order:5;width:100%;text-align:left}
   .seg{order:4}
   .kpi .value{font-size:28px}
@@ -255,6 +257,8 @@ footer{padding:40px 0 60px;display:flex;flex-wrap:wrap;gap:12px;justify-content:
       Social
     </div>
     <div class="spacer"></div>
+    <a class="pill-btn glass back" href="https://pulse.lwlat.org.uk/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg>Back to Pulse</a>
     <div class="updated" id="updated" aria-live="polite">Loading figures</div>
     <div class="seg glass" role="group" aria-label="Date range">
       <button type="button" data-days="7" aria-pressed="false">7 days</button>
