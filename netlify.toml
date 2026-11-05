@@ -1,0 +1,13 @@
+# Netlify build settings for the LwLAT social media dashboard.
+# There is no build step: Netlify serves index.html as it is and
+# deploys the function in netlify/functions.
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
