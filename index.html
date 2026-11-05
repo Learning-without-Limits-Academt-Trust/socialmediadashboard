@@ -41,7 +41,8 @@ a{color:inherit}
 
 /* Header */
 header.top{display:flex;align-items:center;gap:20px;padding:20px 0}
-.logo{display:flex;align-items:center;justify-content:center;min-width:120px;height:48px;padding:0 14px;border:1.5px dashed rgba(255,255,255,.6);border-radius:10px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.logo{display:flex;align-items:center;flex:none}
+.logo img{display:block;height:54px;width:auto;min-width:150px}
 .divider{width:1px;height:36px;background:rgba(255,255,255,.3)}
 .product{display:flex;align-items:center;gap:10px;font-weight:900;font-size:24px;letter-spacing:-.01em}
 .product svg{width:30px;height:30px}
@@ -214,6 +215,7 @@ footer{padding:40px 0 60px;display:flex;flex-wrap:wrap;gap:12px;justify-content:
   .wrap{padding:0 16px}
   header.top{flex-wrap:wrap;gap:12px}
   .divider{display:none}
+  .logo img{height:44px;min-width:122px}
   .spacer{display:none}
   .updated{order:5;width:100%;text-align:left}
   .seg{order:4}
@@ -246,8 +248,7 @@ footer{padding:40px 0 60px;display:flex;flex-wrap:wrap;gap:12px;justify-content:
 
 <div class="wrap">
   <header class="top">
-    <!-- Placeholder: replace with the master white LwLAT logo (.svg), at least 120px wide -->
-    <div class="logo" role="img" aria-label="Learning without Limits Academy Trust">LwLAT logo</div>
+    <a class="logo" href="https://www.lwlat.org.uk" target="_blank" rel="noopener"><img src="assets/lwlat-logo-white.png" width="150" height="54" alt="Learning without Limits Academy Trust"></a>
     <div class="divider" aria-hidden="true"></div>
     <div class="product">
       <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M2 17h7l3-8 5 15 4-11 2 4h7" fill="none" stroke="#ACCE33" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>

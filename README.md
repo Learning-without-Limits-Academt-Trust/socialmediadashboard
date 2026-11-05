@@ -7,6 +7,7 @@ Shows how the trust's social media channels are doing. It covers followers, impr
 | File | What it does |
 |---|---|
 | `index.html` | The whole page: layout, styles and charts. |
+| `assets/lwlat-logo-white.png` | The white (reversed) LwLAT logo. |
 | `netlify/functions/social.mjs` | A small server-side script. It holds the Windsor.ai connection, so the API key never reaches the browser. |
 | `netlify.toml` | Tells Netlify where things are. No build step is needed. |
 
@@ -32,5 +33,4 @@ If you open `index.html` straight from your computer, it shows **sample figures*
 ## Things you can change easily
 
 - **Friendly account names:** the `ACCOUNT_NAMES` list in `social.mjs`.
-- **Logo:** replace the dashed "LwLAT logo" placeholder in `index.html` with the master white logo.
 - **Chart colours:** the `PLATFORM` list near the top of the script in `index.html`.
