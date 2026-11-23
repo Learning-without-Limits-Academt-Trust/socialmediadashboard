@@ -34,3 +34,15 @@ If you open `index.html` straight from your computer, it shows **sample figures*
 
 - **Friendly account names:** the `ACCOUNT_NAMES` list in `social.mjs`.
 - **Chart colours:** the `PLATFORM` list near the top of the script in `index.html`.
+
+## Termly KPIs for the trust board
+
+The "Termly KPIs" section groups the figures by school term and compares each term with the same term a year earlier. **Download PDF** produces a one-page A4 report for board papers.
+
+- **Term dates** are in the `TERMS` list near the bottom of `index.html`, under "Termly KPIs for the trust board". They follow the Leicestershire County Council calendar.
+- **Adding a new academic year:** copy the three lines for the latest year, change the year and the dates, and save. Do this each summer once the council publishes the dates.
+- **Holidays:** with `COUNT_HOLIDAYS = true`, each term runs to the day before the next term starts, so holiday activity is not lost. Set it to `false` to count term-time days only.
+- **Current view** shows this term so far and the year to date, each compared with the same point last year. **By term** lists every term of the chosen year with a total row.
+- **By school** adds together each school's Facebook, Instagram and LinkedIn accounts. For this to work, open `netlify/functions/social.mjs` and fill in `ACCOUNT_NAMES`, giving each account the school's name. Use the account names shown on the dashboard's "By account" card to find the exact spellings.
+- **A term in progress** is compared with the same number of days of that term last year, so the comparison is fair.
+- The PDF uses a small free library (jsPDF) that loads from cdnjs.cloudflare.com when you press the button.

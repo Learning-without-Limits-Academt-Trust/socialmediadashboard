@@ -203,6 +203,52 @@ table.data thead th{color:var(--grey);font-weight:700;font-size:12px;letter-spac
 
 footer{padding:40px 0 60px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:15px;color:rgba(255,255,255,.85)}
 
+/* Termly KPIs */
+.board-line{margin:4px 0 20px;padding:16px 18px;border-radius:16px;background:var(--tint2);font-size:17px;line-height:1.5;color:var(--ink)}
+.board-line strong{color:var(--teal-dark)}
+.sub-h{margin:26px 0 12px;font-size:19px}
+.now-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.now-card{border:1px solid var(--line);border-radius:20px;padding:18px 20px}
+.now-card.live-term{border:2px solid var(--teal);box-shadow:0 0 0 4px var(--tint)}
+.now-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.now-head h5{margin:0;font-size:21px;font-weight:900}
+.term-state{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--grey)}
+.now-card.live-term .term-state{color:var(--teal-dark)}
+.now-sub{margin:2px 0 0;font-size:14px;color:var(--grey)}
+.now-kpis{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px;margin-top:14px}
+.now-kpi .label{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--grey)}
+.now-kpi .value{font-size:30px;font-weight:900;letter-spacing:-.02em;line-height:1.15;font-variant-numeric:tabular-nums}
+.now-kpi .chg{font-size:13px}
+.term-empty{margin:12px 0 0;color:var(--grey);font-size:15px}
+.term-table{max-height:none}
+.term-table table{min-width:760px}
+.term-table td{font-size:15px;padding:11px 10px}
+.term-table td .chg{font-size:13px}
+.term-table tr.is-current td{background:var(--tint2)}
+.term-table tr.is-current td:first-child{box-shadow:inset 4px 0 0 var(--teal)}
+.term-table tr.is-future td{color:var(--grey)}
+.term-table tr.total td{font-weight:700;border-top:2px solid var(--ink);border-bottom:0}
+.term-table .t-name{font-weight:700}
+.school-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;margin:26px 0 12px}
+.school-head .sub-h{margin:0}
+.period-pick{display:inline-flex;align-items:center;gap:10px;font-size:14px;color:var(--grey);font-weight:700}
+.period-pick select{font:inherit;font-size:15px;color:var(--ink);min-height:44px;padding:0 36px 0 16px;border:1px solid var(--line);border-radius:999px;background:var(--tint2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2300706A' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 14px center;-webkit-appearance:none;appearance:none;cursor:pointer}
+.term-table .s-bar{display:block;height:6px;border-radius:0 3px 3px 0;background:var(--teal);margin-top:6px}
+.term-table .rank{display:inline-grid;place-items:center;width:24px;height:24px;margin-right:8px;border-radius:50%;background:var(--tint);color:var(--teal-dark);font-size:12px;font-weight:700;vertical-align:1px}
+.term-table .t-dates{display:block;font-weight:400;font-size:13px;color:var(--grey)}
+.term-chart-head{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:28px 0 6px}
+.term-chart-head h4{margin:0;font-size:19px}
+.term-chart-head .key{display:flex;gap:14px;font-size:13px;color:var(--grey);margin-left:auto}
+.term-chart-head .key span{display:inline-flex;align-items:center;gap:6px}
+.term-chart-head .key i{width:12px;height:12px;border-radius:3px}
+.term-note{margin:14px 0 0;font-size:13px;color:var(--grey)}
+.pdf-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;border:0;background:var(--teal-dark);color:#fff;font:inherit;font-size:15px;font-weight:700;cursor:pointer;margin-left:auto}
+.pdf-btn:hover{background:var(--teal-deep)}
+.pdf-btn svg{width:18px;height:18px}
+.pdf-btn[disabled]{opacity:.6;cursor:progress}
+.term-sample{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:var(--orange);color:var(--ink);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+@media (max-width:900px){ .now-grid{grid-template-columns:1fr} }
+
 /* Loading skeleton */
 .loading .value,.loading .big{color:transparent;background:linear-gradient(90deg,#eef2f2,#f8fafa,#eef2f2);background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:8px}
 @keyframes shimmer{to{background-position:-200% 0}}
@@ -289,6 +335,8 @@ footer{padding:40px 0 60px;display:flex;flex-wrap:wrap;gap:12px;justify-content:
       <div class="actions">
         <a class="pill-btn glass" href="#trend">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>Trends</a>
+        <a class="pill-btn glass" href="#terms">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Board KPIs</a>
         <a class="pill-btn glass" href="#posts">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 15l5-5 4 4 3-3 6 6"/></svg>Top posts</a>
         <button type="button" class="pill-btn glass" id="csv">
@@ -319,6 +367,45 @@ footer{padding:40px 0 60px;display:flex;flex-wrap:wrap;gap:12px;justify-content:
   <section aria-labelledby="h-platforms">
     <div class="sec-head"><h2 id="h-platforms">Channels</h2><p id="platform-note"></p></div>
     <div class="platforms" id="platforms"></div>
+  </section>
+
+  <section id="terms" aria-labelledby="h-terms">
+    <div class="sec-head"><h2 id="h-terms">Termly KPIs</h2><p>For the trust board, using Leicestershire term dates</p></div>
+    <div class="window">
+      <div class="window-bar"><div class="dots" aria-hidden="true"><i></i><i></i><i></i></div><span class="tag">Trust board</span></div>
+      <div class="card-title">
+        <h3 id="term-title">Academic year</h3>
+        <span class="term-sample" id="term-sample" hidden>Sample figures</span>
+        <div class="tabs" role="group" aria-label="Academic year" id="year-tabs"></div>
+        <button type="button" class="pdf-btn" id="pdf">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 11v6"/><path d="M9 14l3 3 3-3"/></svg>Download PDF</button>
+      </div>
+      <div class="card-body">
+        <p class="board-line" id="board-line" aria-live="polite">Loading termly figures.</p>
+        <h4 class="sub-h">Current view</h4>
+        <div class="now-grid" id="now-grid"></div>
+        <h4 class="sub-h">By term</h4>
+        <div class="table-scroll term-table" id="term-table"></div>
+        <div class="school-head">
+          <h4 class="sub-h">By school</h4>
+          <label class="period-pick">Showing
+            <select id="school-period" aria-label="Period for the By school table"></select>
+          </label>
+        </div>
+        <div class="table-scroll term-table" id="school-table"></div>
+        <div class="term-chart-head">
+          <h4 id="term-chart-title">Reach by term</h4>
+          <div class="tabs" role="group" aria-label="Termly measure">
+            <button type="button" data-tmetric="reach" aria-pressed="true">Reach</button>
+            <button type="button" data-tmetric="engagements" aria-pressed="false">Engagements</button>
+            <button type="button" data-tmetric="rate" aria-pressed="false">Engagement rate</button>
+          </div>
+          <div class="key" aria-hidden="true"><span><i style="background:#009189"></i>Selected year</span><span><i style="background:#A6D6D3"></i>Other years</span></div>
+        </div>
+        <div class="chart" id="term-chart"></div>
+        <p class="term-note">Each term runs from its first day to the day before the next term starts, so holidays count towards the term before them. A term in progress is compared with the same number of days of that term last year. Reach is impressions on Facebook and LinkedIn and reach on Instagram. Each school's row adds together all of its accounts.</p>
+      </div>
+    </div>
   </section>
 
   <div class="grid">
@@ -839,16 +926,663 @@ function downloadCsv(){
   document.body.append(a); a.click(); a.remove();
 }
 
+/* ---------- Termly KPIs for the trust board ---------- */
+// Leicestershire County Council term dates (first and last day of each term).
+// Academies can set their own INSET days, so a school may differ by a day or two.
+// Add each new academic year here once the council publishes it.
+const TERMS = [
+  {year:"2024/25", term:"Autumn", start:"2024-08-27", end:"2024-12-20"},
+  {year:"2024/25", term:"Spring", start:"2025-01-06", end:"2025-04-11"},
+  {year:"2024/25", term:"Summer", start:"2025-04-28", end:"2025-07-08"},
+  {year:"2025/26", term:"Autumn", start:"2025-08-26", end:"2025-12-19"},
+  {year:"2025/26", term:"Spring", start:"2026-01-05", end:"2026-03-27"},
+  {year:"2025/26", term:"Summer", start:"2026-04-13", end:"2026-07-07"},
+  {year:"2026/27", term:"Autumn", start:"2026-08-24", end:"2026-12-18"},
+  {year:"2026/27", term:"Spring", start:"2027-01-04", end:"2027-03-19"},
+  {year:"2026/27", term:"Summer", start:"2027-04-05", end:"2027-07-06"}
+];
+// true: a term runs to the day before the next term starts, so holidays count
+// towards the term before them and no day is left out.
+// false: only the days from the first to the last day of term count.
+const COUNT_HOLIDAYS = true;
+const JSPDF_URL = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+
+state.term = {data:null, sample:false, reason:"", year:null, metric:"reach"};
+
+const addDays = (s, k) => { const d = new Date(s + "T00:00:00Z"); d.setUTCDate(d.getUTCDate() + k); return isoDay(d); };
+const daysBetween = (a, b) => Math.round((new Date(b + "T00:00:00Z") - new Date(a + "T00:00:00Z")) / 864e5) + 1;
+const yesterday = () => addDays(isoDay(new Date()), -1);
+const dTerm = (s) => { const d = new Date(s + "T12:00:00Z"); return d.toLocaleDateString("en-GB",{weekday:"short",timeZone:"UTC"}) + " " + d.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric",timeZone:"UTC"}); };
+const dPlain = (s) => new Date(s + "T12:00:00Z").toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
+
+function termPeriod(i){
+  const t = TERMS[i];
+  if (!COUNT_HOLIDAYS) return {from:t.start, to:t.end};
+  const next = TERMS[i + 1];
+  return {from:t.start, to: next ? addDays(next.start, -1) : (Number(t.year.slice(0,4)) + 1) + "-08-31"};
+}
+function priorIndex(i){
+  const t = TERMS[i];
+  const a = Number(t.year.slice(0,4)) - 1;
+  const py = a + "/" + String((a + 1) % 100).padStart(2, "0");
+  return TERMS.findIndex((x) => x.year === py && x.term === t.term);
+}
+function rangeStats(from, to){
+  const channels = [];
+  let reach = 0, eng = 0, followers = null, rows = 0;
+  sortPlatforms(state.term.data.platforms.filter((p) => p.ok)).forEach((p) => {
+    let r = 0, e = 0, f = null, k = 0;
+    (p.daily || []).forEach((d) => {
+      if (d.date < from || d.date > to) return;
+      r += d.impressions || 0; e += d.engagements || 0; k++;
+      if (p.followersMode !== "gain" && d.followers != null) f = d.followers;
+    });
+    if (!k) return;
+    channels.push({id:p.id, name:info(p.id).name, reach:r, engagements:e, rate:r ? e / r : null, followers:f});
+    reach += r; eng += e; rows += k;
+    if (f != null) followers = (followers || 0) + f;
+  });
+  return {reach, engagements:eng, rate:reach ? eng / reach : null, followers, channels, hasData:rows > 0};
+}
+function periodStats(per, limitDays){
+  const yd = yesterday();
+  if (per.from > yd) return {status:"future", per, hasData:false};
+  let to = per.to < yd ? per.to : yd;
+  if (limitDays) { const cap = addDays(per.from, limitDays - 1); if (cap < to) to = cap; }
+  return {status: per.to <= yd ? "complete" : "current", per, to, days:daysBetween(per.from, to), fullDays:daysBetween(per.from, per.to), ...rangeStats(per.from, to)};
+}
+function termStats(i, limitDays){ return periodStats(termPeriod(i), limitDays); }
+function yearPeriod(year){
+  const idx = TERMS.map((t, i) => i).filter((i) => TERMS[i].year === year);
+  return {from: termPeriod(idx[0]).from, to: termPeriod(idx[idx.length - 1]).to};
+}
+function priorYear(year){ const a = Number(year.slice(0,4)) - 1; return a + "/" + String((a + 1) % 100).padStart(2, "0"); }
+function yearCompare(year){
+  const cur = periodStats(yearPeriod(year));
+  const py = priorYear(year);
+  if (!cur.hasData || !TERMS.some((t) => t.year === py)) return {cur, prev:null};
+  const prev = periodStats(yearPeriod(py), cur.status === "current" ? cur.days : null);
+  return {cur, prev: prev.hasData ? prev : null};
+}
+function weekLabel(i, cur){
+  const t = TERMS[i];
+  if (cur.status === "future") return "Not started";
+  if (cur.status === "complete") return "Complete";
+  if (cur.to > t.end) return "Holiday";
+  const termDays = daysBetween(t.start, t.end);
+  return "Week " + Math.ceil(Math.min(cur.days, termDays) / 7) + " of " + Math.ceil(termDays / 7);
+}
+function termCompare(i){
+  const cur = termStats(i);
+  if (!cur.hasData) return {cur, prev:null};
+  const pi = priorIndex(i);
+  if (pi < 0) return {cur, prev:null};
+  const prev = termStats(pi, cur.status === "current" ? cur.days : null);
+  return {cur, prev: prev.hasData ? prev : null};
+}
+function termYears(){
+  const yd = yesterday();
+  return [...new Set(TERMS.map((t) => t.year))].filter((y) => TERMS.some((t, i) => t.year === y && termPeriod(i).from <= yd));
+}
+function headlineIndex(year){
+  let pick = -1;
+  TERMS.forEach((t, i) => { if (t.year === year && termStats(i).hasData) pick = i; });
+  return pick;
+}
+
+/* Sample daily figures, back to the first term, for when live data is missing */
+function sampleDaily(from, to){
+  const r = rng(2024);
+  const inTerm = (d) => TERMS.some((t) => d >= t.start && d <= t.end);
+  const defs = [
+    {id:"facebook", base:1000, rate:.045, followers:7100},
+    {id:"instagram",base:1250, rate:.07,  followers:3900},
+    {id:"linkedin", base:330,  rate:.05,  followers:1500}
+  ];
+  const total = daysBetween(from, to);
+  return {generated:new Date().toISOString(), from, to, platforms: defs.map((p) => {
+    const daily = [];
+    for (let k = 0; k < total; k++) {
+      const date = addDays(from, k);
+      const dow = new Date(date + "T12:00:00Z").getUTCDay();
+      const growth = 1 + .22 * k / 365;
+      const f = (dow === 0 || dow === 6 ? .55 : 1) * (inTerm(date) ? 1 : .6) * (r() > .92 ? 1.8 : 1) * (.75 + r() * .5);
+      const imp = Math.round(p.base * growth * f);
+      daily.push({date, impressions:imp, engagements:Math.round(imp * p.rate * (.75 + r() * .5)), followers:Math.round(p.followers * (1 + .16 * k / 365))});
+    }
+    const names = ["LwLAT (trust)", "Sample Academy 1", "Sample Academy 2", "Sample Academy 3", "Sample Academy 4", "Sample Academy 5"];
+    const wts = names.map((_, k) => k === 0 ? 2.6 : .5 + r() * 1.1), wsum = wts.reduce((a, b) => a + b, 0);
+    const accounts = names.map((name, k) => ({name, daily: daily.map((d) => {
+      const w = wts[k] / wsum * (.8 + r() * .4);
+      return [d.date, Math.round(d.impressions * w), Math.round(d.engagements * w), Math.round(d.followers * wts[k] / wsum)];
+    })}));
+    return {id:p.id, name:info(p.id).name, ok:true, error:null, followersMode:"total", daily, accounts};
+  })};
+}
+
+async function loadTerms(){
+  const from = TERMS[0].start, to = yesterday();
+  let data = null, reason = "";
+  if (new URLSearchParams(location.search).has("demo")) reason = "Sample mode is switched on in the web address.";
+  else if (location.protocol === "file:") reason = "This page is open from your computer. Live figures appear once it runs on Netlify.";
+  else {
+    try {
+      const res = await fetch(`/api/social?mode=daily&from=${from}&to=${to}`, {headers:{accept:"application/json"}});
+      const ct = res.headers.get("content-type") || "";
+      if (!ct.includes("json")) throw new Error("The data service is not set up on this site yet.");
+      const body = await res.json();
+      if (!res.ok || body.error) throw new Error(body.error || ("HTTP " + res.status));
+      if (!body.platforms.some((p) => p.ok)) throw new Error("No channel sent termly figures.");
+      data = body;
+    } catch (err) { reason = err.message; }
+  }
+  state.term.sample = !data;
+  state.term.reason = reason;
+  state.term.data = data || sampleDaily(from, to);
+  renderTerms();
+}
+
+function termChange(cur, prev, kind, suffix = " on last year"){
+  const s = el("span", "chg");
+  const none = suffix ? "No figures for last year" : "–";
+  if (!prev || cur == null || prev[kind] == null || cur[kind] == null) { s.className = "chg flat"; s.textContent = none; return s; }
+  let up, down, txt;
+  if (kind === "rate") {
+    const pts = (cur.rate - prev.rate) * 100;
+    up = pts >= .05; down = pts <= -.05; txt = Math.abs(pts).toFixed(1) + " pts";
+  } else if (kind === "followers") {
+    const g = cur.followers - prev.followers;
+    up = g > 0; down = g < 0; txt = (g > 0 ? "+" : g < 0 ? "-" : "") + fmt.format(Math.abs(g));
+  } else {
+    const c = change(cur[kind], prev[kind]);
+    if (c == null) { s.className = "chg flat"; s.textContent = none; return s; }
+    up = c > .0005; down = c < -.0005; txt = Math.abs(c * 100).toFixed(0) + "%";
+  }
+  s.className = "chg " + (up ? "up" : down ? "down" : "flat");
+  s.append((up ? "▲ " : down ? "▼ " : "● ") + txt);
+  if (suffix) s.append(el("small", null, suffix));
+  return s;
+}
+
+function boardSentence(i){
+  if (i < 0) return null;
+  const t = TERMS[i], {cur, prev} = termCompare(i);
+  const sofar = cur.status === "current";
+  const parts = [];
+  parts.push({t: t.term + " term " + t.year + (sofar ? " so far, to " + dPlain(cur.to) : "") + ". Our content reached "});
+  parts.push({b: fmt.format(cur.reach)});
+  if (prev) {
+    const c = change(cur.reach, prev.reach);
+    if (c != null) parts.push({t: ", " + (c >= 0 ? "up " : "down ") + Math.abs(c * 100).toFixed(0) + "% on the same " + (sofar ? "point" : "term") + " last year"});
+  }
+  parts.push({t: ". It drew "});
+  parts.push({b: fmt.format(cur.engagements) + " engagements"});
+  parts.push({t: ", an engagement rate of "});
+  parts.push({b: pct(cur.rate)});
+  if (prev && prev.rate != null && cur.rate != null) {
+    const pts = (cur.rate - prev.rate) * 100;
+    parts.push({t: Math.abs(pts) < .05 ? " (no change on last year)" : " (" + (pts > 0 ? "up " : "down ") + Math.abs(pts).toFixed(1) + " points)"});
+  }
+  parts.push({t: "."});
+  if (cur.followers != null) { parts.push({t: " The trust's channels have "}); parts.push({b: fmt.format(cur.followers) + " followers"}); parts.push({t: "."}); }
+  return parts;
+}
+
+function renderTerms(){
+  const T = state.term;
+  if (!T.data) return;
+  const years = termYears();
+  if (!T.year || !years.includes(T.year)) T.year = years[years.length - 1];
+  $("term-title").textContent = "Academic year " + T.year;
+  $("term-sample").hidden = !T.sample;
+
+  const tabs = $("year-tabs"); tabs.textContent = "";
+  years.forEach((y) => {
+    const b = el("button", null, y); b.type = "button"; b.setAttribute("aria-pressed", String(y === T.year));
+    b.addEventListener("click", () => { T.year = y; renderTerms(); });
+    tabs.append(b);
+  });
+
+  const line = $("board-line"); line.textContent = "";
+  const parts = boardSentence(headlineIndex(T.year));
+  if (T.sample) { line.append(el("strong", null, "Sample figures. ")); }
+  if (parts) parts.forEach((p) => line.append(p.b ? el("strong", null, p.b) : p.t));
+  else line.append("No figures for this academic year yet.");
+
+  renderNow();
+  renderTermTable();
+  renderSchools();
+  drawTermChart();
+}
+
+function nowCard(title, state_, sub, cur, prev, live){
+  const card = el("div", "now-card" + (live ? " live-term" : ""));
+  const head = el("div", "now-head");
+  head.append(el("h5", null, title), el("span", "term-state", state_));
+  card.append(head, el("p", "now-sub", sub));
+  if (!cur || !cur.hasData) { card.append(el("p", "term-empty", "No figures yet.")); return card; }
+  const grid = el("div", "now-kpis");
+  [["Reach", fmt.format(cur.reach), "reach"], ["Engagements", fmt.format(cur.engagements), "engagements"], ["Engagement rate", pct(cur.rate), "rate"], ["Followers", cur.followers == null ? "–" : fmt.format(cur.followers), "followers"]]
+    .forEach(([l, v, k]) => { const d = el("div", "now-kpi"); d.append(el("div", "label", l), el("div", "value", v), termChange(cur, prev, k, prev && cur.status === "current" ? " on this point last year" : " on last year")); grid.append(d); });
+  card.append(grid);
+  return card;
+}
+function renderNow(){
+  const T = state.term, box = $("now-grid"); box.textContent = "";
+  const hi = headlineIndex(T.year);
+  if (hi >= 0) {
+    const t = TERMS[hi], {cur, prev} = termCompare(hi);
+    const live = cur.status === "current";
+    box.append(nowCard(live ? "This term so far" : t.term + " term", weekLabel(hi, cur), t.term + " term " + t.year + ", " + dTerm(t.start) + " to " + (live ? dTerm(cur.to) : dTerm(t.end)), cur, prev, live));
+  } else box.append(nowCard("This term", "", "No figures yet.", null, null, false));
+  const {cur, prev} = yearCompare(T.year);
+  const live = cur.status === "current";
+  box.append(nowCard(live ? "Year to date" : "Whole year", live ? "So far" : "Complete", "Academic year " + T.year + ", " + dTerm(yearPeriod(T.year).from) + " to " + dTerm(live ? cur.to : TERMS.filter((t) => t.year === T.year).slice(-1)[0].end), cur, prev, false));
+}
+function renderTermTable(){
+  const T = state.term, box = $("term-table"); box.textContent = "";
+  const table = el("table", "data");
+  const cap = el("caption", "sr-only", "Social media figures for each term of " + T.year + ", compared with the same term last year"); table.append(cap);
+  const thead = el("thead"), hr = el("tr");
+  ["Term", "Reach", "vs last year", "Engagements", "vs last year", "Engagement rate", "vs last year", "Followers"].forEach((h) => { const th = el("th", null, h); th.scope = "col"; hr.append(th); });
+  thead.append(hr); table.append(thead);
+  const tb = el("tbody");
+  const cell = (v) => el("td", null, v);
+  const chgCell = (cur, prev, k) => { const td = el("td"); td.append(termChange(cur, prev, k, "")); return td; };
+  const addRow = (cls, name, dates, cur, prev) => {
+    const tr = el("tr", cls);
+    const first = el("td"); first.append(el("span", "t-name", name)); if (dates) first.append(el("span", "t-dates", dates)); tr.append(first);
+    if (!cur.hasData) { const td = el("td", null, cur.status === "future" ? "Not started" : "No figures"); td.colSpan = 7; td.style.textAlign = "left"; tr.append(td); tb.append(tr); return; }
+    tr.append(cell(fmt.format(cur.reach)), chgCell(cur, prev, "reach"), cell(fmt.format(cur.engagements)), chgCell(cur, prev, "engagements"), cell(pct(cur.rate)), chgCell(cur, prev, "rate"), cell(cur.followers == null ? "–" : fmt.format(cur.followers)));
+    tb.append(tr);
+  };
+  TERMS.forEach((t, i) => {
+    if (t.year !== T.year) return;
+    const {cur, prev} = termCompare(i);
+    const tag = cur.status === "current" ? " (so far)" : "";
+    addRow(cur.status === "current" ? "is-current" : cur.status === "future" ? "is-future" : "", t.term + tag, dTerm(t.start) + " to " + dTerm(t.end), cur, prev);
+  });
+  const y = yearCompare(T.year);
+  addRow("total", y.cur.status === "current" ? "Year to date" : "Whole year", "", y.cur, y.prev);
+  table.append(tb); box.append(table);
+}
+
+/* By school: adds together each school's accounts across channels */
+function schoolStats(from, to){
+  const m = new Map();
+  state.term.data.platforms.filter((p) => p.ok).forEach((p) => (p.accounts || []).forEach((a) => {
+    let r = 0, e = 0, f = null, k = 0;
+    a.daily.forEach((d) => {
+      if (d[0] < from || d[0] > to) return;
+      r += d[1] || 0; e += d[2] || 0; k++;
+      if (p.followersMode !== "gain" && d[3] != null) f = d[3];
+    });
+    if (!k) return;
+    const s = m.get(a.name) || {name:a.name, reach:0, engagements:0, followers:null, channels:[]};
+    s.reach += r; s.engagements += e;
+    if (f != null) s.followers = (s.followers || 0) + f;
+    if (!s.channels.includes(info(p.id).name)) s.channels.push(info(p.id).name);
+    m.set(a.name, s);
+  }));
+  m.forEach((s) => { s.rate = s.reach ? s.engagements / s.reach : null; });
+  return m;
+}
+function schoolPeriods(){
+  const T = state.term, opts = [];
+  TERMS.forEach((t, i) => {
+    if (t.year !== T.year) return;
+    const c = termCompare(i);
+    if (c.cur.hasData) opts.push({key:"t" + i, label:t.term + " term" + (c.cur.status === "current" ? " so far" : ""), cmp:c});
+  });
+  const y = yearCompare(T.year);
+  if (y.cur.hasData) opts.push({key:"y", label:y.cur.status === "current" ? "Year to date" : "Whole year", cmp:y});
+  return opts;
+}
+function schoolRows(cmp){
+  const cur = schoolStats(cmp.cur.per.from, cmp.cur.to);
+  const prev = cmp.prev ? schoolStats(cmp.prev.per.from, cmp.prev.to) : new Map();
+  return [...cur.values()].sort((a, b) => b.reach - a.reach).map((s) => ({cur:s, prev:prev.get(s.name) || null}));
+}
+function renderSchools(){
+  const T = state.term, box = $("school-table"), sel = $("school-period");
+  const opts = schoolPeriods();
+  if (!opts.some((o) => o.key === T.school)) {
+    const pick = opts.find((o) => o.key === "t" + headlineIndex(T.year)) || opts[0];
+    T.school = pick ? pick.key : null;
+  }
+  sel.textContent = "";
+  opts.forEach((o) => { const op = el("option", null, o.label); op.value = o.key; op.selected = o.key === T.school; sel.append(op); });
+  box.textContent = "";
+  const o = opts.find((x) => x.key === T.school);
+  if (!o) { box.append(el("p", "term-empty", "No figures yet.")); return; }
+  const rows = schoolRows(o.cmp);
+  if (!rows.length) { box.append(el("p", "term-empty", "No account figures for this period.")); return; }
+  const max = Math.max(...rows.map((x) => x.cur.reach), 1);
+  const table = el("table", "data");
+  table.append(el("caption", "sr-only", "Social media figures for each school, " + o.label + " " + T.year + ", compared with last year"));
+  const thead = el("thead"), hr = el("tr");
+  ["School", "Reach", "vs last year", "Engagements", "vs last year", "Engagement rate", "vs last year", "Followers"].forEach((h) => { const th = el("th", null, h); th.scope = "col"; hr.append(th); });
+  thead.append(hr); table.append(thead);
+  const tb = el("tbody");
+  const chgCell = (c, p, k) => { const td = el("td"); td.append(termChange(c, p, k, "")); return td; };
+  rows.forEach(({cur, prev}, n) => {
+    const tr = el("tr");
+    const first = el("td");
+    first.append(el("span", "rank", String(n + 1)), el("span", "t-name", cur.name), el("span", "t-dates", cur.channels.join(", ")));
+    first.querySelector(".rank").setAttribute("aria-hidden", "true");
+    const reach = el("td", null, fmt.format(cur.reach));
+    const bar = el("span", "s-bar"); bar.style.width = Math.max(2, cur.reach / max * 100) + "%"; bar.setAttribute("aria-hidden", "true"); reach.append(bar);
+    tr.append(first, reach, chgCell(cur, prev, "reach"), el("td", null, fmt.format(cur.engagements)), chgCell(cur, prev, "engagements"), el("td", null, pct(cur.rate)), chgCell(cur, prev, "rate"), el("td", null, cur.followers == null ? "–" : fmt.format(cur.followers)));
+    tb.append(tr);
+  });
+  table.append(tb); box.append(table);
+}
+
+function termSeries(metric){
+  return TERMS.map((t, i) => ({i, t, s:termStats(i)})).filter((x) => x.s.hasData).map((x) => ({
+    ...x, value: metric === "rate" ? x.s.rate : x.s[metric], label: x.t.term, sub: x.t.year
+  }));
+}
+function metricLabel(m){ return m === "rate" ? "Engagement rate" : m === "engagements" ? "Engagements" : "Reach"; }
+function metricFmt(m, v){ return v == null ? "–" : m === "rate" ? pct(v) : (v >= 100000 ? compact.format(v) : fmt.format(v)); }
+
+function drawTermChart(){
+  const box = $("term-chart"); box.textContent = "";
+  const m = state.term.metric;
+  $("term-chart-title").textContent = metricLabel(m) + " by term";
+  const data = termSeries(m);
+  if (!data.length) { box.append(el("p", null, "No termly figures yet.")); return; }
+  const W = Math.max(box.clientWidth || 640, 280), H = 260;
+  const mg = {t:24, r:8, b:46, l:W < 500 ? 44 : 56};
+  const iw = W - mg.l - mg.r, ih = H - mg.t - mg.b;
+  const max = Math.max(...data.map((d) => d.value || 0), m === "rate" ? .01 : 1);
+  const ticks = niceTicks(max, 4), top = ticks[ticks.length - 1];
+  const slot = iw / data.length, bw = Math.min(24, slot * .6);
+  const y = (v) => mg.t + ih - v / top * ih;
+  const svg = svgEl("svg", {viewBox:`0 0 ${W} ${H}`, height:H, role:"img", "aria-label":`${metricLabel(m)} by term. ` + data.map((d) => `${d.label} ${d.sub}: ${metricFmt(m, d.value)}`).join(". ")});
+  const defs = svgEl("defs", {});
+  const pat = svgEl("pattern", {id:"hatch", width:6, height:6, patternUnits:"userSpaceOnUse", patternTransform:"rotate(45)"});
+  pat.append(svgEl("rect", {width:6, height:6, fill:"#009189"}), svgEl("line", {x1:0, y1:0, x2:0, y2:6, stroke:"#fff", "stroke-width":2.5, opacity:".55"}));
+  defs.append(pat); svg.append(defs);
+  const axis = svgEl("g", {class:"axis"});
+  ticks.forEach((tk) => {
+    axis.append(svgEl("line", {class:"grid-line", x1:mg.l, x2:W - mg.r, y1:y(tk), y2:y(tk)}));
+    const tx = svgEl("text", {x:mg.l - 8, y:y(tk) + 4, "text-anchor":"end"});
+    tx.textContent = m === "rate" ? (tk * 100).toFixed(tk * 100 % 1 ? 1 : 0) + "%" : tickFmt(tk, top);
+    axis.append(tx);
+  });
+  svg.append(axis);
+  data.forEach((d, k) => {
+    const cx = mg.l + slot * k + slot / 2, v = d.value || 0;
+    const h0 = Math.max(1, v / top * ih), x0 = cx - bw / 2, y0 = mg.t + ih - h0;
+    const sel = d.t.year === state.term.year, current = d.s.status === "current";
+    const g = svgEl("g", {});
+    const r = Math.min(4, h0);
+    const path = `M${x0},${mg.t + ih}V${y0 + r}Q${x0},${y0} ${x0 + r},${y0}H${x0 + bw - r}Q${x0 + bw},${y0} ${x0 + bw},${y0 + r}V${mg.t + ih}Z`;
+    g.append(svgEl("path", {d:path, fill: current ? "url(#hatch)" : sel ? "#009189" : "#A6D6D3"}));
+    const ttl = svgEl("title", {}); ttl.textContent = `${d.label} ${d.sub}${current ? " (so far)" : ""}: ${metricFmt(m, d.value)}`; g.append(ttl);
+    svg.append(g);
+    if (slot >= 44) {
+      const val = svgEl("text", {x:cx, y:y0 - 7, "text-anchor":"middle", class:"end-label"}); val.textContent = metricFmt(m, d.value); svg.append(val);
+    }
+    const l1 = svgEl("text", {x:cx, y:H - 26, "text-anchor":"middle", class:"axis"}); l1.textContent = slot < 60 ? d.label.slice(0,3) : d.label;
+    const l2 = svgEl("text", {x:cx, y:H - 11, "text-anchor":"middle", class:"axis"}); l2.textContent = current ? "so far" : (slot < 60 ? d.sub.slice(2) : d.sub);
+    [l1, l2].forEach((l) => { l.setAttribute("style", "font-size:12px;fill:#636466;font-family:inherit" + (sel ? ";font-weight:700" : "")); svg.append(l); });
+  });
+  box.append(svg);
+}
+
+/* ---------- PDF report ---------- */
+function loadScript(src){
+  return new Promise((res, rej) => {
+    const s = document.createElement("script"); s.src = src; s.onload = res;
+    s.onerror = () => rej(new Error("The PDF tool could not load. Check your internet connection and try again."));
+    document.head.append(s);
+  });
+}
+async function logoPng(){
+  try {
+    const img = document.querySelector(".logo img");
+    if (!img) return null;
+    await img.decode();
+    const c = document.createElement("canvas"); c.width = img.naturalWidth; c.height = img.naturalHeight;
+    c.getContext("2d").drawImage(img, 0, 0);
+    return {data:c.toDataURL("image/png"), ratio:img.naturalWidth / img.naturalHeight};
+  } catch { return null; }
+}
+const pdfNum = (v) => v == null ? "-" : fmt.format(Math.round(v));
+const pdfPct = (v) => v == null ? "-" : (v * 100).toFixed(1) + "%";
+function pdfChange(cur, prev, kind){
+  if (!prev || cur == null) return "-";
+  if (kind === "rate") { if (cur.rate == null || prev.rate == null) return "-"; const p = (cur.rate - prev.rate) * 100; if (Math.abs(p) < .05) return "no change"; return (p > 0 ? "+" : "-") + Math.abs(p).toFixed(1) + " pts"; }
+  if (kind === "followers") { if (cur.followers == null || prev.followers == null) return "-"; const g = cur.followers - prev.followers; return (g >= 0 ? "+" : "-") + fmt.format(Math.abs(g)); }
+  const c = change(cur[kind], prev[kind]); if (c == null) return "-";
+  return (c >= 0 ? "+" : "-") + Math.abs(c * 100).toFixed(0) + "%";
+}
+
+async function downloadPdf(){
+  const btn = $("pdf");
+  const T = state.term;
+  if (!T.data) return;
+  btn.disabled = true;
+  try {
+    if (!window.jspdf) await loadScript(JSPDF_URL);
+    const {jsPDF} = window.jspdf;
+    const doc = new jsPDF({unit:"mm", format:"a4"});
+    const PW = 210, M = 16, CW = PW - M * 2;
+    const TEAL = [0,112,106], TEAL2 = [0,145,137], TINT = [230,244,243], INK = [31,31,31], GREY = [99,100,102], LINE = [227,232,232], LIGHT = [166,214,211];
+    const today = new Date();
+    let y = 0;
+    const ensure = (h) => { if (y + h > 283) { doc.addPage(); y = 18; } };
+
+    // Header band
+    doc.setFillColor(...TEAL); doc.rect(0, 0, PW, 30, "F");
+    const logo = await logoPng();
+    if (logo) doc.addImage(logo.data, "PNG", M, 7, 16 * logo.ratio, 16);
+    else { doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(12); doc.text("Learning without Limits Academy Trust", M, 19); }
+    doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(16);
+    doc.text("Social media KPIs", PW - M, 14, {align:"right"});
+    doc.setFont("helvetica", "normal"); doc.setFontSize(10);
+    doc.text("Termly report for the trust board", PW - M, 21, {align:"right"});
+    y = 41;
+
+    doc.setTextColor(...INK); doc.setFont("helvetica", "bold"); doc.setFontSize(18);
+    doc.text("Academic year " + T.year, M, y); y += 7;
+    doc.setFont("helvetica", "normal"); doc.setFontSize(9.5); doc.setTextColor(...GREY);
+    doc.text("Produced " + dPlain(isoDay(today)) + ". Figures to " + dPlain(yesterday()) + ". Leicestershire County Council term dates. Source: Windsor.ai.", M, y); y += 8;
+
+    if (T.sample) {
+      doc.setFillColor(245,186,25); doc.roundedRect(M, y, CW, 10, 2, 2, "F");
+      doc.setTextColor(...INK); doc.setFont("helvetica", "bold"); doc.setFontSize(10);
+      doc.text("SAMPLE FIGURES. These are not real results and must not be shared with the board.", M + 4, y + 6.5); y += 14;
+    }
+
+    // Headline
+    const parts = boardSentence(headlineIndex(T.year));
+    const sentence = parts ? parts.map((p) => p.b || p.t).join("") : "No figures for this academic year yet.";
+    doc.setFont("helvetica", "normal"); doc.setFontSize(11);
+    const lines = doc.splitTextToSize(sentence, CW - 10);
+    const hh = lines.length * 5.2 + 8;
+    doc.setFillColor(...TINT); doc.roundedRect(M, y, CW, hh, 3, 3, "F");
+    doc.setTextColor(...INK); doc.text(lines, M + 5, y + 7); y += hh + 7;
+
+    // Current view: this term so far and year to date
+    doc.setFont("helvetica", "bold"); doc.setFontSize(12); doc.setTextColor(...INK);
+    doc.text("Current view", M, y); y += 4;
+    const nowBox = (x, title, sub, cur, prev, live) => {
+      const w = (CW - 6) / 2, h = 38;
+      doc.setLineWidth(live ? .6 : .3); doc.setDrawColor(...(live ? TEAL2 : LINE)); doc.roundedRect(x, y, w, h, 3, 3, "S");
+      doc.setFont("helvetica", "bold"); doc.setFontSize(11); doc.setTextColor(...INK); doc.text(title, x + 4, y + 6.5);
+      doc.setFont("helvetica", "normal"); doc.setFontSize(7.5); doc.setTextColor(...GREY); doc.text(sub, x + 4, y + 10.8);
+      if (!cur || !cur.hasData) { doc.text("No figures yet.", x + 4, y + 20); return; }
+      [["REACH", pdfNum(cur.reach), "reach"], ["ENGAGEMENTS", pdfNum(cur.engagements), "engagements"], ["ENGAGEMENT RATE", pdfPct(cur.rate), "rate"], ["FOLLOWERS", pdfNum(cur.followers), "followers"]].forEach(([l, v, k], n) => {
+        const cx = x + 4 + (n % 2) * (w / 2), cy = y + 17 + Math.floor(n / 2) * 11;
+        doc.setFont("helvetica", "bold"); doc.setFontSize(6.8); doc.setTextColor(...GREY); doc.text(l, cx, cy);
+        doc.setFontSize(12.5); doc.setTextColor(...INK); doc.text(v, cx, cy + 5.2);
+        const c = pdfChange(cur, prev, k);
+        if (c !== "-") { const vw = doc.getTextWidth(v); doc.setFont("helvetica", "normal"); doc.setFontSize(7.5); doc.setTextColor(...(c === "no change" ? GREY : c.startsWith("-") ? [206,21,63] : TEAL)); doc.text(c, cx + vw + 2, cy + 5.2); }
+      });
+    };
+    const hiNow = headlineIndex(T.year);
+    if (hiNow >= 0) {
+      const t = TERMS[hiNow], tc = termCompare(hiNow), live = tc.cur.status === "current";
+      nowBox(M, live ? "This term so far" : t.term + " term", t.term + " term " + t.year + ", " + weekLabel(hiNow, tc.cur).toLowerCase() + ", to " + dPlain(tc.cur.to), tc.cur, tc.prev, live);
+    }
+    const yc = yearCompare(T.year), ylive = yc.cur.status === "current";
+    nowBox(M + (CW + 6) / 2, ylive ? "Year to date" : "Whole year", "Academic year " + T.year + ", " + dPlain(yearPeriod(T.year).from) + " to " + dPlain(yc.cur.to || yesterday()), yc.cur, yc.prev, false);
+    y += 42;
+    doc.setFont("helvetica", "normal"); doc.setFontSize(7.5); doc.setTextColor(...GREY);
+    doc.text("Changes compare with the same point last year (" + (ylive ? "same number of days" : "whole term or year") + "). Rate changes are in percentage points.", M, y);
+    y += 9;
+
+    // KPI table
+    doc.setFont("helvetica", "bold"); doc.setFontSize(12); doc.setTextColor(...INK);
+    doc.text("By term", M, y); y += 4;
+    const cols = [{h:"Term", w:20}, {h:"Term dates", w:40}, {h:"Reach", w:21, a:"r"}, {h:"vs last yr", w:16, a:"r"}, {h:"Engagements", w:23, a:"r"}, {h:"vs last yr", w:16, a:"r"}, {h:"Eng. rate", w:19, a:"r"}, {h:"Followers", w:23, a:"r"}];
+    const row = (cells, opts = {}) => {
+      const rh = 7; ensure(rh);
+      if (opts.head) { doc.setFillColor(...TEAL); doc.rect(M, y, CW, rh, "F"); doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(8.5); }
+      else { if (opts.fill) { doc.setFillColor(...TINT); doc.rect(M, y, CW, rh, "F"); } doc.setTextColor(...(opts.muted ? GREY : INK)); doc.setFont("helvetica", opts.bold ? "bold" : "normal"); doc.setFontSize(9); doc.setDrawColor(...LINE); doc.line(M, y + rh, M + CW, y + rh); }
+      let x = M;
+      cells.forEach((c, k) => { const col = cols[k]; doc.text(String(c), col.a === "r" ? x + col.w - 2 : x + 2, y + 4.8, {align: col.a === "r" ? "right" : "left"}); x += col.w; });
+      y += rh;
+    };
+    row(cols.map((c) => c.h), {head:true});
+    TERMS.forEach((t, i) => {
+      if (t.year !== T.year) return;
+      const {cur, prev} = termCompare(i);
+      const dates = new Date(t.start + "T12:00:00Z").toLocaleDateString("en-GB",{day:"numeric",month:"short"}) + " to " + new Date(t.end + "T12:00:00Z").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});
+      if (!cur.hasData) { row([t.term, dates, "Not started", "", "", "", "", ""], {muted:true}); return; }
+      row([t.term + (cur.status === "current" ? "*" : ""), dates, pdfNum(cur.reach), pdfChange(cur, prev, "reach"), pdfNum(cur.engagements), pdfChange(cur, prev, "engagements"), pdfPct(cur.rate), pdfNum(cur.followers)], {fill: cur.status === "current"});
+    });
+    if (yc.cur.hasData) row([ylive ? "Year to date" : "Whole year", "", pdfNum(yc.cur.reach), pdfChange(yc.cur, yc.prev, "reach"), pdfNum(yc.cur.engagements), pdfChange(yc.cur, yc.prev, "engagements"), pdfPct(yc.cur.rate), pdfNum(yc.cur.followers)], {bold:true});
+    const anyCurrent = TERMS.some((t, i) => t.year === T.year && termStats(i).status === "current");
+    doc.setFont("helvetica", "normal"); doc.setFontSize(8); doc.setTextColor(...GREY);
+    y += 4.5;
+    const foot = doc.splitTextToSize((anyCurrent ? "* Term in progress. Figures so far, compared with the same number of days last year. " : "") + "\"vs last yr\" compares with the same term in the previous academic year.", CW);
+    doc.text(foot, M, y);
+    y += foot.length * 3.5 + 7;
+
+    // Page 2: chart, schools, channels and notes
+    doc.addPage(); y = 20;
+    const m = "reach";
+    const data = termSeries(m);
+    if (data.length) {
+      ensure(74);
+      doc.setFont("helvetica", "bold"); doc.setFontSize(12); doc.setTextColor(...INK);
+      doc.text("Reach by term", M, y);
+      doc.setFont("helvetica", "normal"); doc.setFontSize(8); doc.setTextColor(...GREY);
+      doc.setFillColor(...TEAL2); doc.rect(PW - M - 62, y - 2.6, 3, 3, "F"); doc.text("Selected year", PW - M - 58, y);
+      doc.setFillColor(...LIGHT); doc.rect(PW - M - 30, y - 2.6, 3, 3, "F"); doc.text("Other years", PW - M - 26, y);
+      y += 6;
+      const ch = 38, base = y + ch, left = M + 14, w = CW - 14;
+      const max = Math.max(...data.map((d) => d.value || 0), 1), ticks = niceTicks(max, 4), top = ticks[ticks.length - 1];
+      doc.setDrawColor(...LINE); doc.setLineWidth(.2);
+      ticks.forEach((tk) => { const ty = base - tk / top * ch; doc.line(left, ty, left + w, ty); doc.text(tickFmt(tk, top), left - 2, ty + 1, {align:"right"}); });
+      const slot = w / data.length, bw = Math.min(10, slot * .55);
+      data.forEach((d, k) => {
+        const cx = left + slot * k + slot / 2, h0 = Math.max(.4, (d.value || 0) / top * ch);
+        const sel = d.t.year === T.year, current = d.s.status === "current";
+        doc.setFillColor(...(sel ? (current ? [102,189,184] : TEAL2) : LIGHT));
+        doc.roundedRect(cx - bw / 2, base - h0, bw, h0, 1, 1, "F");
+        doc.rect(cx - bw / 2, base - Math.min(1, h0), bw, Math.min(1, h0), "F");
+        doc.setTextColor(...INK); doc.setFont("helvetica", "bold"); doc.setFontSize(7.5);
+        doc.text(metricFmt(m, d.value), cx, base - h0 - 1.8, {align:"center"});
+        doc.setFont("helvetica", sel ? "bold" : "normal"); doc.setTextColor(...GREY);
+        doc.text(d.label, cx, base + 4.5, {align:"center"});
+        doc.text(current ? "so far" : d.sub, cx, base + 8.5, {align:"center"});
+      });
+      y = base + 15;
+    }
+
+    // Channel breakdown for the headline term, on page 2
+    const hi = headlineIndex(T.year);
+    if (hi >= 0) {
+      const {cur, prev} = termCompare(hi);
+      const srows = schoolRows(termCompare(hi));
+      if (srows.length) {
+        ensure(16 + srows.length * 7);
+        doc.setFont("helvetica", "bold"); doc.setFontSize(12); doc.setTextColor(...INK);
+        doc.text("By school: " + TERMS[hi].term + " term" + (cur.status === "current" ? " so far" : ""), M, y); y += 4;
+        const sc = [{h:"School", w:52}, {h:"Reach", w:24, a:"r"}, {h:"vs last yr", w:20, a:"r"}, {h:"Engagements", w:26, a:"r"}, {h:"Eng. rate", w:20, a:"r"}, {h:"Followers", w:36, a:"r"}];
+        const srow = (cells, head) => {
+          const rh = 7;
+          if (head) { doc.setFillColor(...TEAL); doc.rect(M, y, CW, rh, "F"); doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(8.5); }
+          else { doc.setTextColor(...INK); doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.setDrawColor(...LINE); doc.line(M, y + rh, M + CW, y + rh); }
+          let x = M;
+          cells.forEach((c, k) => { const col = sc[k]; let txt = String(c); while (k === 0 && doc.getTextWidth(txt) > col.w - 4 && txt.length > 4) txt = txt.slice(0, -2) + "…"; doc.text(txt, col.a === "r" ? x + col.w - 2 : x + 2, y + 4.8, {align: col.a === "r" ? "right" : "left"}); x += col.w; });
+          y += rh;
+        };
+        srow(sc.map((c) => c.h), true);
+        srows.forEach(({cur: c, prev: pv}) => srow([c.name, pdfNum(c.reach), pdfChange(c, pv, "reach"), pdfNum(c.engagements), pdfPct(c.rate), pdfNum(c.followers)]));
+        y += 8;
+      }
+      ensure(20 + cur.channels.length * 8);
+      doc.setFont("helvetica", "bold"); doc.setFontSize(12); doc.setTextColor(...INK);
+      doc.text("By channel: " + TERMS[hi].term + " term" + (cur.status === "current" ? " so far" : ""), M, y); y += 4;
+      const cc = [{h:"Channel", w:40}, {h:"Reach", w:30, a:"r"}, {h:"vs last yr", w:22, a:"r"}, {h:"Engagements", w:30, a:"r"}, {h:"Eng. rate", w:26, a:"r"}, {h:"Followers", w:30, a:"r"}];
+      const crow = (cells, head) => {
+        const rh = 7;
+        if (head) { doc.setFillColor(...TEAL); doc.rect(M, y, CW, rh, "F"); doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(8.5); }
+        else { doc.setTextColor(...INK); doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.setDrawColor(...LINE); doc.line(M, y + rh, M + CW, y + rh); }
+        let x = M;
+        cells.forEach((c, k) => { const col = cc[k]; doc.text(String(c), col.a === "r" ? x + col.w - 2 : x + 2, y + 4.8, {align: col.a === "r" ? "right" : "left"}); x += col.w; });
+        y += rh;
+      };
+      crow(cc.map((c) => c.h), true);
+      cur.channels.forEach((c) => {
+        const pc = prev && prev.channels.find((x) => x.id === c.id);
+        crow([c.name, pdfNum(c.reach), pdfChange(c, pc, "reach"), pdfNum(c.engagements), pdfPct(c.rate), pdfNum(c.followers)]);
+      });
+      y += 7;
+    }
+
+    // Notes
+    const notes = [
+      "Reach counts impressions on Facebook and LinkedIn and reach on Instagram, as each platform reports them through Windsor.ai.",
+      "Engagements are reactions, comments, shares and clicks. Engagement rate is engagements divided by reach.",
+      COUNT_HOLIDAYS ? "Each term runs from its first day to the day before the next term starts, so holidays count towards the term before them. Terms are not all the same length." : "Only the days from the first to the last day of each term are counted.",
+      "Term dates follow the Leicestershire County Council calendar. Individual academies may differ by a day or two.",
+      "Followers is the total across the trust's accounts on the last day of the term, or the latest day for a term in progress."
+    ];
+    doc.setFontSize(8);
+    const noteLines = notes.map((n) => doc.splitTextToSize(n, CW - 5));
+    ensure(5 + noteLines.reduce((t, l) => t + l.length * 3.6 + 1.2, 0));
+    doc.setFont("helvetica", "bold"); doc.setFontSize(10); doc.setTextColor(...INK);
+    doc.text("Notes", M, y); y += 4.5;
+    doc.setFont("helvetica", "normal"); doc.setFontSize(8); doc.setTextColor(...GREY);
+    noteLines.forEach((l, k) => { doc.text((k + 1) + ".", M, y); doc.text(l, M + 5, y); y += l.length * 3.6 + 1.2; });
+
+    // Footers
+    const pages = doc.getNumberOfPages();
+    for (let p = 1; p <= pages; p++) {
+      doc.setPage(p); doc.setFont("helvetica", "normal"); doc.setFontSize(8); doc.setTextColor(...GREY);
+      doc.setDrawColor(...LINE); doc.line(M, 286, PW - M, 286);
+      doc.text("Learning without Limits Academy Trust  |  lwlat.org.uk", M, 291);
+      doc.text("Page " + p + " of " + pages, PW - M, 291, {align:"right"});
+    }
+    doc.save("lwlat-social-kpis-" + T.year.replace("/", "-") + (T.sample ? "-SAMPLE" : "") + ".pdf");
+  } catch (err) {
+    alert(err.message || "The PDF could not be made.");
+  } finally {
+    btn.disabled = false;
+  }
+}
+
 /* ---------- Controls ---------- */
 function press(groupSel, btn){ document.querySelectorAll(groupSel).forEach((b) => b.setAttribute("aria-pressed", String(b === btn))); }
 document.querySelectorAll("[data-days]").forEach((b) => b.addEventListener("click", () => { state.days = Number(b.dataset.days); press("[data-days]", b); load(); }));
 document.querySelectorAll("[data-metric]").forEach((b) => b.addEventListener("click", () => { state.metric = b.dataset.metric; press("[data-metric]", b); renderTrend(); }));
 document.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => { state.view = b.dataset.view; press("[data-view]", b); renderTrend(); }));
-$("refresh").addEventListener("click", load);
+$("refresh").addEventListener("click", () => { load(); loadTerms(); });
+document.querySelectorAll("[data-tmetric]").forEach((b) => b.addEventListener("click", () => { state.term.metric = b.dataset.tmetric; press("[data-tmetric]", b); drawTermChart(); }));
+$("pdf").addEventListener("click", downloadPdf);
+$("school-period").addEventListener("change", (e) => { state.term.school = e.target.value; renderSchools(); });
 $("csv").addEventListener("click", downloadCsv);
-let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => state.data && renderTrend(), 150); });
+let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { if (state.data) renderTrend(); if (state.term.data) drawTermChart(); }, 150); });
 
 load();
+loadTerms();
 })();
 </script>
 </body>
