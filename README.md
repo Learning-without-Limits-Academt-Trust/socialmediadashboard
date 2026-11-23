@@ -1,6 +1,6 @@
 # LwLAT social media dashboard
 
-Shows how the trust's social media channels are doing. It covers followers (in total and for each channel), impressions, engagements and engagement rate, with daily trends, figures for each account and the top posts. The figures come from Windsor.ai. The design follows Pulse Concept C and the LwLAT Brand Guidelines 2026 (version 1.0, October 2026).
+Shows how the trust's social media channels are doing. It covers followers, impressions, engagements and engagement rate, with daily trends, figures for each account and the top posts. The figures come from Windsor.ai. The design follows Pulse Concept C and the LwLAT Brand Guidelines v1.0.
 
 ## What is in this folder
 
@@ -8,8 +8,6 @@ Shows how the trust's social media channels are doing. It covers followers (in t
 |---|---|
 | `index.html` | The whole page: layout, styles and charts. |
 | `assets/lwlat-logo-white.png` | The white (reversed) LwLAT logo. |
-| `assets/mission-line-white.png` | *To add.* The mission line artwork, white and yellow version. Until it is added, the mission is written out as plain text. |
-| `assets/lwlat-symbol-circle.png` | *To add.* The symbol in a white circle, used as the browser tab icon. |
 | `netlify/functions/social.mjs` | A small server-side script. It holds the Windsor.ai connection, so the API key never reaches the browser. |
 | `netlify.toml` | Tells Netlify where things are. No build step is needed. |
 
@@ -35,13 +33,4 @@ If you open `index.html` straight from your computer, it shows **sample figures*
 ## Things you can change easily
 
 - **Friendly account names:** the `ACCOUNT_NAMES` list in `social.mjs`.
-- **Chart colours:** the `PLATFORM` list near the top of the script in `index.html`. Use colours from the brand palette only.
-
-## How the brand guidelines are applied
-
-- **Colours.** Only the core and values colours from pages 9 and 10 are used, plus white, near-black text and light tints of teal. Small text on white is in darkest teal (#00706A) or grey.
-- **Script yellow** (#F2C925) is kept for the mission line artwork and is not used anywhere else.
-- **Logo.** The white version sits on teal, with clear space around it, and is never shown below 120 pixels wide.
-- **Mission line.** Shown from the supplied artwork once `mission-line-white.png` is added. It is never retyped in another font. Until then it appears in full, in sentence case, as plain text.
-- **Values.** All four appear together at the foot of the page, in the set order, with the names and descriptors exactly as written in the guidelines, each in its own colour. Value names on pink and green are large and bold, as page 10 requires.
-- **Typeface.** The Sans is listed first. Source Sans 3 stands in on computers that do not have a licensed copy of The Sans. Modish is not used.
+- **Chart colours:** the `PLATFORM` list near the top of the script in `index.html`.

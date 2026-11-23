@@ -228,7 +228,7 @@ function summarise(p, rows) {
       day.engagements += eng;
       byDate.set(date, day);
     }
-    const a = byAccount.get(acc) || { name: acc, impressions: 0, engagements: 0, followers: null, followerGain: null };
+    const a = byAccount.get(acc) || { name: acc, impressions: 0, engagements: 0, followers: null };
     a.impressions += imp;
     a.engagements += eng;
     byAccount.set(acc, a);
@@ -237,7 +237,6 @@ function summarise(p, rows) {
       const v = sumOf(r, f.followers);
       if (f.followersMode === "gain") {
         gainTotal += v;
-        a.followerGain = (a.followerGain || 0) + v;
       } else {
         const e = follows.get(acc) || {};
         if (!e.first || date < e.first.date) e.first = { date, v };
@@ -255,9 +254,7 @@ function summarise(p, rows) {
     for (const [acc, e] of follows) {
       followers += e.last.v;
       followerGain += e.last.v - e.first.v;
-      const a = byAccount.get(acc);
-      a.followers = e.last.v;
-      a.followerGain = e.last.v - e.first.v;
+      byAccount.get(acc).followers = e.last.v;
     }
   }
 
