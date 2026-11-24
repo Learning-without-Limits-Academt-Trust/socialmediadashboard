@@ -46,3 +46,12 @@ The "Termly KPIs" section groups the figures by the trust's six terms and compar
 - **By school** adds together each school's Facebook, Instagram and LinkedIn accounts. For this to work, open `netlify/functions/social.mjs` and fill in `ACCOUNT_NAMES`, giving each account the school's name. Use the account names shown on the dashboard's "By account" card to find the exact spellings.
 - **A term in progress** is compared with the same number of days of that term last year, so the comparison is fair.
 - The PDF uses a small free library (jsPDF) that loads from cdnjs.cloudflare.com when you press the button.
+
+## Windsor.ai notes (checked against the live API, 24 November 2026)
+
+- **Field names** in `netlify/functions/social.mjs` were checked against Windsor.ai's own field lists. You can see the full list for any connector at `https://connectors.windsor.ai/<connector>/fields?api_key=YOUR_KEY`.
+- **Facebook and Instagram keep two years of data.** The dashboard never asks for older dates, so earlier terms simply show no Facebook or Instagram figures.
+- **LinkedIn history** starts in October 2025 for this account.
+- **Followers:** Facebook gives a daily total. Instagram and LinkedIn only give today's total, so follower changes against last year use Facebook alone.
+- **Reach** is impressions on Facebook and LinkedIn, and views on Instagram.
+- **Schools:** `ACCOUNT_NAMES` already matches every account Windsor.ai returns to its school. Add a line there if a new account is connected.

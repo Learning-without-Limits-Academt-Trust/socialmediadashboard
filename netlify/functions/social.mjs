@@ -27,9 +27,10 @@ const WINDSOR = "https://connectors.windsor.ai";
 // posts       post-level fields, used for the "Top posts" section.
 //             Set posts: null to skip posts for a platform.
 //
-// The field names below are a STARTING POINT taken from Windsor.ai's
-// connector documentation. Confirm each one against the field list in your
-// Windsor.ai account (Data preview > API URL) before relying on the figures.
+// Field names checked against Windsor.ai's live field lists on 24 November 2026
+// (https://connectors.windsor.ai/<connector>/fields). Facebook and Instagram
+// only allow the last two years of data, so historyDays stops the dashboard
+// asking for anything older.
 // ---------------------------------------------------------------------------
 const PLATFORMS = [
   {
@@ -38,6 +39,7 @@ const PLATFORMS = [
     connector: "facebook_organic",
     enabled: true,
     accountField: "account_name",
+    historyDays: 729, // Meta keeps two years of insights
     fields: {
       followers: "page_follows",
       followersMode: "total",
@@ -47,11 +49,11 @@ const PLATFORMS = [
     posts: {
       id: "post_id",
       text: "post_message",
-      url: "post_permalink_url",
+      url: "permalink_url",
       date: "post_created_time",
-      image: "post_full_picture",
+      image: "full_picture",
       impressions: "post_impressions",
-      engagements: ["post_reactions_total", "post_comments", "post_shares"],
+      engagements: "post_engagements",
     },
   },
   {
@@ -60,20 +62,22 @@ const PLATFORMS = [
     connector: "instagram",
     enabled: true,
     accountField: "account_name",
+    historyDays: 729, // Meta keeps two years of insights
+    followersSnapshot: true, // Instagram only gives today's follower total
     fields: {
       followers: "followers_count",
       followersMode: "total",
-      impressions: "reach",
+      impressions: "views",
       engagements: "total_interactions",
     },
     posts: {
       id: "media_id",
       text: "media_caption",
       url: "media_permalink",
-      date: "media_timestamp",
+      date: "timestamp",
       image: "media_url",
-      impressions: "media_reach",
-      engagements: ["media_like_count", "media_comments_count"],
+      impressions: "media_views",
+      engagements: "media_engagement",
     },
   },
   {
@@ -82,11 +86,12 @@ const PLATFORMS = [
     connector: "linkedin_organic",
     enabled: true,
     accountField: "account_name",
+    followersLatestOnly: true, // LinkedIn repeats today's follower total on every day
     fields: {
       followers: "organization_follower_count",
       followersMode: "total",
-      impressions: "impression_count",
-      engagements: ["like_count", "comment_count", "share_count", "click_count"],
+      impressions: "account_analytics_impression_count",
+      engagements: "account_analytics_total_engagements",
     },
     posts: null,
   },
@@ -125,7 +130,30 @@ const PLATFORMS = [
 // Facebook, Instagram and LinkedIn accounts the SAME name on the right, and the
 // "By school" table adds them together.
 const ACCOUNT_NAMES = {
-  // "Learning without Limits Academy Trust": "Trust",
+  // Trust
+  "Learning without Limits Academy Trust": "LwLAT (trust)",
+  "lwlat": "LwLAT (trust)",
+  // Babington Academy
+  "Babington Academy": "Babington Academy",
+  "babingtonlwlat": "Babington Academy",
+  "babingtonbolts": "Babington Academy",
+  // Lancaster Academy
+  "Lancaster Academy": "Lancaster Academy",
+  "lancaster_academy_lwlat": "Lancaster Academy",
+  // South Wigston High School
+  "South Wigston High School": "South Wigston High School",
+  "southwigstonhighschool": "South Wigston High School",
+  // Heatherbrook Primary Academy
+  "Heatherbrook Primary Academy & Nursery": "Heatherbrook Primary Academy",
+  "Heatherbrook Primary Academy": "Heatherbrook Primary Academy",
+  // Woodstock Primary Academy
+  "Woodstock Primary Academy & Nursery": "Woodstock Primary Academy",
+  "Woodstock Primary Academy": "Woodstock Primary Academy",
+  // Wyken Croft Primary School (Facebook only)
+  "Wyken Croft Primary School": "Wyken Croft Primary School",
+  // EduHub
+  "Eduhub": "EduHub",
+  "Eduhub LwLAT": "EduHub",
 };
 
 const ALLOWED_DAYS = [7, 28, 90];
@@ -321,14 +349,50 @@ function tidyPosts(p, rows) {
   return [...seen.values()];
 }
 
+// Earliest date a platform can supply (Meta allows two years).
+function earliest(p) {
+  return p.historyDays ? iso(shift(new Date(), -p.historyDays)) : "0000-01-01";
+}
+
+// Instagram only reports today's follower total, and LinkedIn repeats today's
+// total on every day. Keep the total on the latest day of each account only,
+// so past terms do not show a false history.
+async function addFollowerSnapshot(p, rows, key) {
+  if (p.followersLatestOnly && rows.length) {
+    const acc = p.accountField || "account_name";
+    const latest = new Map();
+    for (const r of rows) if (!latest.has(r[acc]) || String(r.date) > String(latest.get(r[acc]).date)) latest.set(r[acc], r);
+    const keep = new Set(latest.values());
+    for (const r of rows) if (!keep.has(r)) for (const k of list(p.fields.followers)) r[k] = null;
+  }
+  if (!p.followersSnapshot || !rows.length) return rows;
+  try {
+    const today = iso(new Date());
+    const snap = await windsor(p.connector, [p.accountField || "account_name", ...list(p.fields.followers)], today, today, key);
+    const latest = new Map();
+    for (const r of rows) {
+      const acc = r[p.accountField || "account_name"];
+      if (!latest.has(acc) || String(r.date) > String(latest.get(acc).date)) latest.set(acc, r);
+    }
+    for (const sr of snap) {
+      const target = latest.get(sr[p.accountField || "account_name"]);
+      if (target && hasAny(sr, p.fields.followers)) for (const k of list(p.fields.followers)) target[k] = sr[k];
+    }
+  } catch {
+    // Followers are a nice-to-have. Keep the rest of the figures.
+  }
+  return rows;
+}
+
 async function loadPlatform(p, per, key) {
   const f = p.fields;
   const daily = ["date", p.accountField || "account_name", ...list(f.followers), ...list(f.impressions), ...list(f.engagements)];
   try {
-    const [cur, prev] = await Promise.all([
+    const [cur0, prev] = await Promise.all([
       windsor(p.connector, daily, per.current.from, per.current.to, key),
       windsor(p.connector, daily, per.previous.from, per.previous.to, key),
     ]);
+    const cur = await addFollowerSnapshot(p, cur0.filter((r) => !r.date || String(r.date).slice(0, 10) <= per.current.to).map((r) => ({ ...r })), key);
     const now = summarise(p, cur);
     const before = summarise(p, prev);
     let posts = [];
@@ -392,16 +456,21 @@ export default async (req) => {
       const b = shift(a, 364);
       chunks.push([iso(a), iso(b) < to ? iso(b) : to]);
     }
+    // Optional: one platform per request (?platform=facebook), so each request stays quick.
+    const only = url.searchParams.get("platform");
     const platforms = await Promise.all(
-      PLATFORMS.filter((p) => p.enabled).map(async (p) => {
+      PLATFORMS.filter((p) => p.enabled && (!only || p.id === only)).map(async (p) => {
         const f = p.fields;
         const fields = ["date", p.accountField || "account_name", ...list(f.followers), ...list(f.impressions), ...list(f.engagements)];
         try {
+          // Skip any part of the range older than the platform allows.
+          const first = earliest(p);
+          const usable = chunks.map(([a, b]) => [a < first ? first : a, b]).filter(([a, b]) => a <= b);
           // Past days do not change, so keep them for longer.
-          const parts = await Promise.all(chunks.map(([a, b]) => windsor(p.connector, fields, a, b, key, TERM_CACHE_MINUTES)));
-          const rows = parts.flat();
+          const parts = await Promise.all(usable.map(([a, b]) => windsor(p.connector, fields, a, b, key, TERM_CACHE_MINUTES)));
+          const rows = await addFollowerSnapshot(p, parts.flat().filter((r) => !r.date || String(r.date).slice(0, 10) <= to).map((r) => ({ ...r })), key);
           const sum = summarise(p, rows);
-          return { id: p.id, name: p.name, ok: true, error: null, followersMode: f.followersMode || "total", daily: sum.daily, accounts: accountDaily(p, rows) };
+          return { id: p.id, name: p.name, ok: true, error: null, followersMode: f.followersMode || "total", historyFrom: first > from ? first : from, daily: sum.daily, accounts: accountDaily(p, rows) };
         } catch (err) {
           return { id: p.id, name: p.name, ok: false, error: err.message };
         }

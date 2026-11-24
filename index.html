@@ -23,6 +23,7 @@
   --font:"The Sans","Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;font-family:var(--font);font-size:17px;line-height:1.5;color:var(--white);background:var(--teal-dark);min-height:100vh}
 a{color:inherit}
@@ -425,7 +426,7 @@ footer{padding:40px 0 60px;display:flex;flex-wrap:wrap;gap:12px;justify-content:
           <div class="key" id="term-key" aria-hidden="true"></div>
         </div>
         <div class="chart" id="term-chart"></div>
-        <p class="term-note">Each term runs from its first day to the day before the next term starts, so holidays count towards the term before them. A term in progress is compared with the same number of days of that term last year. Reach is impressions on Facebook and LinkedIn and reach on Instagram. Each school's combined figures add together its Facebook, Instagram and LinkedIn accounts.</p>
+        <p class="term-note">Each term runs from its first day to the day before the next term starts, so holidays count towards the term before them. A term in progress is compared with the same number of days of that term last year. Reach is the number of times content was seen: impressions on Facebook and LinkedIn, views on Instagram. Each school's combined figures add together its Facebook, Instagram and LinkedIn accounts.</p>
       </div>
     </div>
   </section>
@@ -979,6 +980,8 @@ const TERMS = [
 // towards the term before them and no day is left out.
 // false: only the days from the first to the last day of term count.
 const COUNT_HOLIDAYS = true;
+// Channels shown in the termly figures. Match the enabled platforms in netlify/functions/social.mjs.
+const TERM_PLATFORMS = ["facebook", "instagram", "linkedin"];
 const JSPDF_URL = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
 
 state.term = {data:null, sample:false, reason:"", year:null, metric:"reach"};
@@ -1100,15 +1103,20 @@ async function loadTerms(){
   if (new URLSearchParams(location.search).has("demo")) reason = "Sample mode is switched on in the web address.";
   else if (location.protocol === "file:") reason = "This page is open from your computer. Live figures appear once it runs on Netlify.";
   else {
-    try {
-      const res = await fetch(`/api/social?mode=daily&from=${from}&to=${to}`, {headers:{accept:"application/json"}});
-      const ct = res.headers.get("content-type") || "";
-      if (!ct.includes("json")) throw new Error("The data service is not set up on this site yet.");
-      const body = await res.json();
-      if (!res.ok || body.error) throw new Error(body.error || ("HTTP " + res.status));
-      if (!body.platforms.some((p) => p.ok)) throw new Error("No channel sent termly figures.");
-      data = body;
-    } catch (err) { reason = err.message; }
+    // One request per channel, so each stays inside Netlify's time limit.
+    const one = async (id) => {
+      try {
+        const res = await fetch(`/api/social?mode=daily&platform=${id}&from=${from}&to=${to}`, {headers:{accept:"application/json"}});
+        const ct = res.headers.get("content-type") || "";
+        if (!ct.includes("json")) throw new Error(res.status === 404 ? "The data service is not set up on this site yet." : "The request took too long. Press refresh to try again.");
+        const body = await res.json();
+        if (!res.ok || body.error) throw new Error(body.error || ("HTTP " + res.status));
+        return body.platforms[0] || {id, name:info(id).name, ok:false, error:"Not switched on in the data function."};
+      } catch (err) { return {id, name:info(id).name, ok:false, error:err.message}; }
+    };
+    const platforms = await Promise.all(TERM_PLATFORMS.map(one));
+    if (platforms.some((p) => p.ok)) data = {generated:new Date().toISOString(), from, to, platforms};
+    else reason = platforms[0].error;
   }
   state.term.sample = !data;
   state.term.reason = reason;
@@ -1116,16 +1124,28 @@ async function loadTerms(){
   renderTerms();
 }
 
+// Change in followers, counting only channels with a figure in both periods
+// (Instagram has no follower history, so it is left out of comparisons).
+function followerDiff(cur, prev){
+  if (!cur || !prev || cur.followers == null || prev.followers == null) return null;
+  if (!cur.channels || !prev.channels) return cur.followers - prev.followers;
+  let d = 0, n = 0;
+  cur.channels.forEach((c) => {
+    const p = prev.channels.find((x) => x.id === c.id);
+    if (c.followers != null && p && p.followers != null) { d += c.followers - p.followers; n++; }
+  });
+  return n ? d : null;
+}
 function termChange(cur, prev, kind, suffix = " on last year"){
   const s = el("span", "chg");
   const none = suffix ? "No figures for last year" : "–";
-  if (!prev || cur == null || prev[kind] == null || cur[kind] == null) { s.className = "chg flat"; s.textContent = none; return s; }
+  if (!prev || cur == null || prev[kind] == null || cur[kind] == null || (kind === "followers" && followerDiff(cur, prev) == null)) { s.className = "chg flat"; s.textContent = none; return s; }
   let up, down, txt;
   if (kind === "rate") {
     const pts = (cur.rate - prev.rate) * 100;
     up = pts >= .05; down = pts <= -.05; txt = Math.abs(pts).toFixed(1) + " pts";
   } else if (kind === "followers") {
-    const g = cur.followers - prev.followers;
+    const g = followerDiff(cur, prev);
     up = g > 0; down = g < 0; txt = (g > 0 ? "+" : g < 0 ? "-" : "") + fmt.format(Math.abs(g));
   } else {
     const c = change(cur[kind], prev[kind]);
@@ -1180,6 +1200,8 @@ function renderTerms(){
   const line = $("board-line"); line.textContent = "";
   const parts = boardSentence(headlineIndex(T.year));
   if (T.sample) { line.append(el("strong", null, "Sample figures. ")); }
+  const missing = T.data.platforms.filter((p) => !p.ok);
+  if (!T.sample && missing.length) line.append(el("strong", null, missing.map((p) => info(p.id).name).join(" and ") + " termly figures could not be loaded (" + missing[0].error + "). "));
   if (parts) parts.forEach((p) => line.append(p.b ? el("strong", null, p.b) : p.t));
   else line.append("No figures for this academic year yet.");
 
@@ -1412,7 +1434,7 @@ const pdfPct = (v) => v == null ? "-" : (v * 100).toFixed(1) + "%";
 function pdfChange(cur, prev, kind){
   if (!prev || cur == null) return "-";
   if (kind === "rate") { if (cur.rate == null || prev.rate == null) return "-"; const p = (cur.rate - prev.rate) * 100; if (Math.abs(p) < .05) return "no change"; return (p > 0 ? "+" : "-") + Math.abs(p).toFixed(1) + " pts"; }
-  if (kind === "followers") { if (cur.followers == null || prev.followers == null) return "-"; const g = cur.followers - prev.followers; return (g >= 0 ? "+" : "-") + fmt.format(Math.abs(g)); }
+  if (kind === "followers") { const g = followerDiff(cur, prev); if (g == null) return "-"; return (g >= 0 ? "+" : "-") + fmt.format(Math.abs(g)); }
   const c = change(cur[kind], prev[kind]); if (c == null) return "-";
   return (c >= 0 ? "+" : "-") + Math.abs(c * 100).toFixed(0) + "%";
 }
@@ -1573,7 +1595,7 @@ async function downloadPdf(){
         doc.text("By school: " + periodName, M, y); y += 2;
         doc.setFont("helvetica", "normal"); doc.setFontSize(8); doc.setTextColor(...GREY);
         doc.text("Each school's combined total (shaded), then each of its channels. Both \"vs last yr\" columns compare with the same " + (cur.status === "current" ? "point" : "term") + " last year.", M, y + 3.5); y += 6;
-        const sc = [{h:"School and channel", w:50}, {h:"Reach", w:24, a:"r"}, {h:"vs last yr", w:18, a:"r"}, {h:"Engagements", w:25, a:"r"}, {h:"Eng. rate", w:19, a:"r"}, {h:"Followers", w:21, a:"r"}, {h:"vs last yr", w:21, a:"r"}];
+        const sc = [{h:"School and channel", w:60}, {h:"Reach", w:22, a:"r"}, {h:"vs last yr", w:17, a:"r"}, {h:"Engagements", w:24, a:"r"}, {h:"Eng. rate", w:17, a:"r"}, {h:"Followers", w:19, a:"r"}, {h:"vs last yr", w:19, a:"r"}];
         const srow = (cells, kind, colour) => {
           const rh = kind === "school" ? 7.5 : 6.5;
           if (kind === "head") { doc.setFillColor(...TEAL); doc.rect(M, y, CW, 7, "F"); doc.setTextColor(255); doc.setFont("helvetica", "bold"); doc.setFontSize(8.5); }
@@ -1590,7 +1612,7 @@ async function downloadPdf(){
           });
           y += rh;
         };
-        const fGain = (c, p) => (c.followers == null || !p || p.followers == null) ? "-" : ((c.followers - p.followers >= 0 ? "+" : "-") + fmt.format(Math.abs(c.followers - p.followers)));
+        const fGain = (c, p) => { const g = followerDiff(c, p); return g == null ? "-" : (g >= 0 ? "+" : "-") + fmt.format(Math.abs(g)); };
         ensure(7 + 7.5 + 6.5 * 3);
         srow(sc.map((c) => c.h), "head");
         srows.forEach(({cur: c, prev: pv}) => {
@@ -1626,11 +1648,11 @@ async function downloadPdf(){
 
     // Notes
     const notes = [
-      "Reach counts impressions on Facebook and LinkedIn and reach on Instagram, as each platform reports them through Windsor.ai.",
+      "Reach is the number of times content was seen: impressions on Facebook and LinkedIn, views on Instagram, as each platform reports them through Windsor.ai.",
       "Engagements are reactions, comments, shares and clicks. Engagement rate is engagements divided by reach.",
       COUNT_HOLIDAYS ? "Each term runs from its first day to the day before the next term starts, so holidays count towards the term before them. Terms are not all the same length." : "Only the days from the first to the last day of each term are counted.",
       "Term dates follow the LwLAT calendar (six terms). Earlier years use the Leicestershire calendar where the trust's own dates were not available.",
-      "Followers is the total across the trust's accounts on the last day of the term, or the latest day for a term in progress."
+      "Followers is the total across the trust's accounts on the last day of the term, or the latest day for a term in progress. Instagram and LinkedIn only report today's follower total, so follower changes compare Facebook only. Facebook and Instagram keep two years of history."
     ];
     doc.setFontSize(8);
     const noteLines = notes.map((n) => doc.splitTextToSize(n, CW - 5));
