@@ -37,10 +37,10 @@ If you open `index.html` straight from your computer, it shows **sample figures*
 
 ## Termly KPIs for the trust board
 
-The "Termly KPIs" section groups the figures by school term and compares each term with the same term a year earlier. **Download PDF** produces a one-page A4 report for board papers.
+The "Termly KPIs" section groups the figures by the trust's six terms and compares each term with the same term a year earlier. **Download PDF** produces a two-page A4 report for board papers. The "By school" pages of the PDF follow the "Showing" choice on the dashboard, so pick Term 1, Term 2 or Year to date before downloading.
 
-- **Term dates** are in the `TERMS` list near the bottom of `index.html`, under "Termly KPIs for the trust board". They follow the Leicestershire County Council calendar.
-- **Adding a new academic year:** copy the three lines for the latest year, change the year and the dates, and save. Do this each summer once the council publishes the dates.
+- **Term dates** are in the `TERMS` list near the bottom of `index.html`, under "Termly KPIs for the trust board". 2026/27 comes from the trust's own calendar (LwLAT Term Dates 2026/2027). 2024/25 and 2025/26 were worked out from the Leicestershire calendar, so replace them with the trust's own dates if you have them.
+- **Adding a new academic year:** copy the six lines for the latest year, change the year and the dates, and save. Each term starts on its first working day (INSET days included) and ends on its last day before the holiday.
 - **Holidays:** with `COUNT_HOLIDAYS = true`, each term runs to the day before the next term starts, so holiday activity is not lost. Set it to `false` to count term-time days only.
 - **Current view** shows this term so far and the year to date, each compared with the same point last year. **By term** lists every term of the chosen year with a total row.
 - **By school** adds together each school's Facebook, Instagram and LinkedIn accounts. For this to work, open `netlify/functions/social.mjs` and fill in `ACCOUNT_NAMES`, giving each account the school's name. Use the account names shown on the dashboard's "By account" card to find the exact spellings.
